@@ -62,6 +62,27 @@
       allowfullscreen>
     </iframe>
   </div>
+<script>
+  function isMobile() {
+    return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+  }
 
+  if (isMobile()) {
+    const iframe = document.querySelector('.video-wrapper iframe');
+
+    // Request fullscreen when user taps anywhere on the page
+    document.addEventListener('click', function triggerFullscreen() {
+      if (iframe.requestFullscreen) {
+        iframe.requestFullscreen();
+      } else if (iframe.webkitRequestFullscreen) {
+        iframe.webkitRequestFullscreen(); // Safari/iOS
+      } else if (iframe.mozRequestFullScreen) {
+        iframe.mozRequestFullScreen(); // Firefox
+      }
+      // Remove listener after first tap so it only fires once
+      document.removeEventListener('click', triggerFullscreen);
+    }, { once: true });
+  }
+</script>
 </body>
 </html>
